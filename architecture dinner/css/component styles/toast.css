@@ -1,0 +1,45 @@
+.notification {
+    position: fixed;
+    width: 16rem;
+    top: 2rem;
+    right: 0;
+    left: 0;
+    justify-self: center;
+    align-self: center;
+    background-color: #2e2e2e;
+    color: #fff;
+    padding: 15px 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    font-family: 'Segoe UI', sans-serif;
+    z-index: 9999;
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    font-size: .9rem;
+
+  }
+  
+  /* Show animation */
+  .notification.show {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  /* Types */
+  .notification.success {
+    /* background-color: #28a745; */
+    background-color: rgba(34, 24, 7, 0.705);
+    border: 1px solid var(--primary-color);
+
+  }
+  .notification.error {
+    background-color: #dc3545;
+  }
+  .notification.info {
+    background-color: #17a2b8;
+  }
+  
