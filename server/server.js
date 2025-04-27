@@ -7,7 +7,8 @@ import fs from "fs";
 import path from "path";
 
 import paymentRoutes from "./routes/payment.route.js";
-import qrRoutes from "./routes/qr.route.js"
+import qrRoutes from "./routes/qr.route.js";
+import { connectDB } from "./db/connectDB.js";
 
 dotenv.config();
 
@@ -25,11 +26,14 @@ app.use(morgan('dev', {
 }));
 
 // remember to handle exceptions here
-app.use(morgan('common', {
+app.use(morgan('dev', {
   stream: fs.createWriteStream(path.join(__dirname, 'log', 'access.log'), { flags: 'a' })
 }));
 
 app.use("/api/v0/payment", paymentRoutes);
 app.use("/api/v0", qrRoutes);
 
-app.listen(PORT, () => console.log(`Server running on port: ${PORT}`));
+app.listen(PORT, () => {
+  connectDB();
+  console.log(`Server running on port: ${PORT}`)
+});
