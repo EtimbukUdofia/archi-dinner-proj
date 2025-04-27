@@ -4,6 +4,6 @@ import { initializePayment, verifyPaymentAndGenerateQR } from "../controller/pay
 const router = express.Router();
 
 router.post('/initialize-payment', initializePayment);
-router.post('/payment-callback', verifyPaymentAndGenerateQR);
+router.get('/payment-callback', verifyPaymentAndGenerateQR);
 
 export default router;
