@@ -58,6 +58,7 @@ export const verifyPaymentAndGenerateQR = async (req, res) => {
 
       //Generate QR Code
       const qrCodeDataUrl = await qrcode.toDataURL(uniqueCode);
+      const qrCodeBuffer = await qrcode.toBuffer(uniqueCode);
 
       // save QR to database
       const result = await QrCode.create({
@@ -67,7 +68,7 @@ export const verifyPaymentAndGenerateQR = async (req, res) => {
       });
 
       // Send QR via Email
-      // await sendQRCodeEmail(email, qrCodeDataUrl);
+      await sendQRCodeEmail(reference, email, qrCodeDataUrl, qrCodeBuffer);
 
       console.log({ qrcode: qrCodeDataUrl });
       res.redirect(`${process.env.FRONTEND_URL}result.html?reference=${reference}`);
