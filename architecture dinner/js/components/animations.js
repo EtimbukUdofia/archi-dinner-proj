@@ -77,6 +77,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // Show loading overlay
     loadingOverlay.classList.add("active");
     const email = document.getElementById("email").value;
+    const firstName = document.getElementById("firstName").value;
+    const lastName = document.getElementById("lastName").value;
+    const phone = document.getElementById("phone").value;
 
     try {
       const response = await fetch(
@@ -84,7 +87,7 @@ document.addEventListener('DOMContentLoaded', function() {
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email, amount }),
+          body: JSON.stringify({ email, amount, firstName, lastName, phone }),
         }
       );
 
