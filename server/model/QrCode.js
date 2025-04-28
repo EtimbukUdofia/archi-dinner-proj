@@ -8,6 +8,21 @@ const qrCodeSchema = new Schema({
     unique: true
   },
 
+  firstName: {
+    type: String,
+    require: true
+  },
+
+  lastName: {
+    type: String,
+    required: true
+  },
+
+  phoneNumber: {
+    type: String,
+    required: true
+  },
+
   email: {
     type: String,
     required: true,
