@@ -4,7 +4,7 @@ import { sendQRCodeEmail } from "../services/mailer.js";
 import { QrCode } from "../model/QrCode.js";
 
 export const initializePayment = async (req, res) => {
-  const { email, amount } = req.body;
+  const { email, amount, firstName, lastName, phone } = req.body;
 
   try {
     const response = await axios.post(
@@ -13,6 +13,25 @@ export const initializePayment = async (req, res) => {
         email,
         amount,
         callback_url: `${process.env.BASE_URL}/api/v0/payment/payment-callback`,
+        metadata: {
+          custom_fields: [
+            {
+              display_name: "First Name",
+              variable_name: "firstName",
+              value: firstName
+            },
+            {
+              display_name: "Last Name",
+              variable_name: "lastName",
+              value: lastName
+            },
+            {
+              display_name: "Phone Number",
+              variable_name: "phone",
+              value: phone
+            }
+          ]
+        }
       },
       {
         headers: {
@@ -40,7 +59,7 @@ export const verifyPaymentAndGenerateQR = async (req, res) => {
     return res.redirect(`${process.env.FRONTEND_URL}/payment-failed?message=Missing%20Reference`);
   }
 
-  console.log("passed");
+  // console.log("passed");
 
   try {
     const response = await axios.get(
@@ -54,6 +73,13 @@ export const verifyPaymentAndGenerateQR = async (req, res) => {
 
     if (response.data.data.status === 'success') {
       const email = response.data.data.customer.email;
+      const amount = ((response.data.data.amount)/100).toFixed(2);
+      const metaData = response.data.data.metadata.custom_fields;
+
+      const firstName = metaData.find(field => field.variable_name === "firstName")?.value || '';
+      const lastName = metaData.find(field => field.variable_name === "lastName")?.value || '';
+      const phone = metaData.find(field => field.variable_name === "phone")?.value || '';
+      
       const uniqueCode = `QR-${reference}`;
 
       //Generate QR Code
@@ -63,14 +89,17 @@ export const verifyPaymentAndGenerateQR = async (req, res) => {
       // save QR to database
       const result = await QrCode.create({
         reference,
+        firstName,
+        lastName,
+        phoneNumber: phone,
         email,
         qrCodeDataUrl,
       });
 
       // Send QR via Email
-      await sendQRCodeEmail(reference, email, qrCodeDataUrl, qrCodeBuffer);
+      await sendQRCodeEmail(reference, firstName, lastName, email, amount, qrCodeDataUrl, qrCodeBuffer);
 
-      console.log({ qrcode: qrCodeDataUrl });
+      // console.log({ qrcode: qrCodeDataUrl });
       res.redirect(`${process.env.FRONTEND_URL}result.html?reference=${reference}`);
     } else {
       res.status(400).json({ success: false, message: "Payment not successful" });
