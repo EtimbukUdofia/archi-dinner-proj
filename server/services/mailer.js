@@ -12,7 +12,10 @@ const transporter = nodemailer.createTransport({
 
 export const sendQRCodeEmail = async (
   reference,
+  firstName,
+  lastName,
   email,
+  amount,
   qrCodeDataUrl,
   qrCodeBuffer
 ) => {
@@ -24,7 +27,7 @@ export const sendQRCodeEmail = async (
     html: `
       <div style="font-family: Arial, sans-serif; background: #f9f9f9; padding: 20px; border-radius: 10px;">
       <h2 style="color: #4CAF50;">🎉 Your Event Ticket</h2>
-      <p>Hi <strong>${email}</strong>,</p>
+      <p>Hi <strong>${firstName} ${lastName}</strong>,</p>
       <p>Thank you for your payment. Your ticket is ready!</p>
 
       <div style="margin: 20px 0; text-align: center;">
@@ -33,7 +36,8 @@ export const sendQRCodeEmail = async (
 
       <div style="background: #fff; padding: 15px; border-radius: 8px; border: 1px solid #ddd;">
         <p><strong>Reference:</strong> ${reference}</p>
-        <p><strong>Amount Paid:</strong> ₦500</p>
+        <p><strong>Amount Paid:</strong> ₦${amount}</p>
+        <p><strong>Email:</strong> ${email}</p>
         <p><strong>Date:</strong> ${new Date().toLocaleDateString()}</p>
       </div>
 
