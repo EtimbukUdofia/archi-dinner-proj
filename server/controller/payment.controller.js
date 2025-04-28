@@ -4,14 +4,14 @@ import { sendQRCodeEmail } from "../services/mailer.js";
 import { QrCode } from "../model/QrCode.js";
 
 export const initializePayment = async (req, res) => {
-  const { email } = req.body;
+  const { email, amount } = req.body;
 
   try {
     const response = await axios.post(
       "https://api.paystack.co/transaction/initialize",
       {
         email,
-        amount: 5000,
+        amount,
         callback_url: `${process.env.BASE_URL}/api/v0/payment/payment-callback`,
       },
       {
