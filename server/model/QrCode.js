@@ -23,6 +23,11 @@ const qrCodeSchema = new Schema({
     required: true
   },
 
+  department: {
+    type: String,
+    required: true
+  },
+
   email: {
     type: String,
     required: true,

@@ -4,7 +4,7 @@ import { sendQRCodeEmail } from "../services/mailer.js";
 import { QrCode } from "../model/QrCode.js";
 
 export const initializePayment = async (req, res) => {
-  const { email, amount, firstName, lastName, phone } = req.body;
+  const { email, amount, firstName, lastName, phone, department } = req.body;
 
   try {
     const response = await axios.post(
@@ -29,7 +29,12 @@ export const initializePayment = async (req, res) => {
               display_name: "Phone Number",
               variable_name: "phone",
               value: phone
-            }
+            },
+            {
+              display_name: "Department",
+              variable_name: "department",
+              value: department
+            },
           ]
         }
       },
@@ -79,6 +84,7 @@ export const verifyPaymentAndGenerateQR = async (req, res) => {
       const firstName = metaData.find(field => field.variable_name === "firstName")?.value || '';
       const lastName = metaData.find(field => field.variable_name === "lastName")?.value || '';
       const phone = metaData.find(field => field.variable_name === "phone")?.value || '';
+      const department = metaData.find(field => field.variable_name === "department")?.value || '';
       
       const uniqueCode = `QR-${reference}`;
 
@@ -92,6 +98,7 @@ export const verifyPaymentAndGenerateQR = async (req, res) => {
         firstName,
         lastName,
         phoneNumber: phone,
+        department,
         email,
         qrCodeDataUrl,
       });

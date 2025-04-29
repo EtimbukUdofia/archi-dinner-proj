@@ -17,7 +17,7 @@ export const getQrCode = async (req, res) => {
       return res.status(404).json({ success: false, message: "Record not found" });
     };
     
-    res.status(200).json({ success: true, email: record.email, qrcode: record.qrCodeDataUrl, firstName: record.firstName, lastName: record.lastName });
+    res.status(200).json({ success: true, email: record.email, qrcode: record.qrCodeDataUrl, firstName: record.firstName, lastName: record.lastName, department: record.department });
   } catch (error) {
     console.error(error.message);
     res.status(500).json({ success: false, message: 'Error getting QR Code' });
