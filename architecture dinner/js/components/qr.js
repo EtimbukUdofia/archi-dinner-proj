@@ -20,7 +20,7 @@ const loadQRCode = async () => {
     if (response.ok) {
       const img = document.createElement("img");
       img.src = data.qrcode;
-      qrCodeContainer.innerHTML = "";
+      // qrCodeContainer.innerHTML = "";
       qrCodeContainer.appendChild(img);
 
       const fullName = document.getElementById("fullName");
@@ -33,6 +33,7 @@ const loadQRCode = async () => {
 
       // download button
       const downloadBtn = document.createElement("button");
+      downloadBtn.classList.add('download-btn');
       downloadBtn.innerText = "Download QR Code";
 
       downloadLink.appendChild(downloadBtn);
