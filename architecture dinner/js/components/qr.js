@@ -25,6 +25,9 @@ const loadQRCode = async () => {
             const fullName = document.getElementById("fullName");
             fullName.innerText = `${data.firstName} ${data.lastName}`;
 
+            const department = document.getElementById("department");
+            department.innerText = `${data.department}`;
+
             // Download link
             const downloadLink = document.createElement("a");
             downloadLink.href = data.qrcode;

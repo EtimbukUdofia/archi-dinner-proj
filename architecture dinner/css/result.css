@@ -3,6 +3,10 @@
     height: 136vh;
     overflow: hidden;
     position: relative;
+    display: flex;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
 }
 .resultBg{
     width: 100%;
@@ -28,17 +32,20 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    align-content: center;
 
 }
 .content{
-    width: 100%;
-    height: 70%;
+    width: 90%;
+    height: 95%;
+    /* background-color: #00000096; */
     display: flex;
     flex-direction: column;
     gap: 2.2rem;
     justify-content: center;
     align-items: center;
-    margin-top: 3rem;
+    justify-self: center;
+    align-self: center;
 }
 .content-header{
     display: flex;
@@ -141,4 +148,13 @@
 .download-btn:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(191, 162, 90, 0.4);
+}
+
+
+@media only screen and (min-width:768px){
+    .resultBody{
+        width: 100%;
+        height: 120vh;
+        
+    }
 }

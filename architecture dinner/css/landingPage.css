@@ -90,8 +90,23 @@ input {
     font-size: 1rem;
     transition: .3s ease-in-out;
     margin-top: 1rem;
+    cursor: pointer;
   }
   .content form button:active{
     transform: scale(.8);
     transition: .3s ease-in-out;
   }
+  .content form button:hover{
+    background-color: #e0b528;
+    transition: .3s ease-in-out;
+  }
+
+
+@media only screen and (min-width:768px){
+    #paymentForm input{
+        width: 25rem;
+    }
+    #paymentForm button {
+        width: 15rem;
+    }
+}

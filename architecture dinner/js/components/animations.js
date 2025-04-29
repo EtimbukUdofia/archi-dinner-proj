@@ -42,11 +42,11 @@ document.addEventListener('DOMContentLoaded', function() {
   const hiddenElements3 = document.querySelectorAll('.hidden3');
   hiddenElements3.forEach((el) => observer3.observe(el));
 
-  // Form submission handling (kept as it's not animation-related)
+  // Form submission handling
   const form = document.getElementById("paymentForm");
   if (!form) return;
 
-  // Create loading overlay
+  //  loading overlay
   const loadingOverlay = document.createElement("div");
   loadingOverlay.className = "loading-overlay";
   loadingOverlay.innerHTML = `
@@ -65,7 +65,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
+    
+    // Show loading overlay and disable form
     loadingOverlay.classList.add("active");
+    form.style.pointerEvents = "none";
+    form.style.opacity = "0.5";
+    
     const email = document.getElementById("email").value;
     const firstName = document.getElementById("firstName").value;
     const lastName = document.getElementById("lastName").value;
@@ -88,15 +93,31 @@ document.addEventListener('DOMContentLoaded', function() {
       const result = await response.json();
 
       if (result.authorization_url) {
+        // Keep overlay visible during redirect
         window.location.href = result.authorization_url;
+        
+        // Fallback in case redirect fails
+        setTimeout(() => {
+          loadingOverlay.classList.remove("active");
+          form.style.pointerEvents = "auto";
+          form.style.opacity = "1";
+        }, 10000); 
       } else {
-        alert("Failed to initialize payment. Please try again.");
+        throw new Error("No authorization URL received");
       }
-      loadingOverlay.classList.remove("active");
+      
     } catch (error) {
       loadingOverlay.classList.remove("active");
+      form.style.pointerEvents = "auto";
+      form.style.opacity = "1";
+      
       console.error("Submission error:", error);
       alert("There was an error submitting your form. Please try again.");
     }
+  });
+
+  
+  window.addEventListener('beforeunload', () => {
+    loadingOverlay.classList.add("active");
   });
 });
