@@ -31,7 +31,7 @@ const loadQRCode = async () => {
             // Download link
             const downloadLink = document.createElement("a");
             downloadLink.href = data.qrcode;
-            downloadLink.download = "qr-code.png";
+            downloadLink.download = `Dinner-qr-code-${reference}.png`;
 
             // Download button
             const downloadBtn = document.createElement("button");

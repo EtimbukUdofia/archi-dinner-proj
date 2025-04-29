@@ -61,7 +61,6 @@ document.addEventListener('DOMContentLoaded', function() {
   `;
   document.body.appendChild(loadingOverlay);
 
-  const amount = 2000;
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -75,6 +74,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const firstName = document.getElementById("firstName").value;
     const lastName = document.getElementById("lastName").value;
     const phone = document.getElementById("phone").value;
+    const department = document.getElementById("department").value;
 
     try {
       const response = await fetch(
@@ -82,7 +82,7 @@ document.addEventListener('DOMContentLoaded', function() {
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email, amount, firstName, lastName, phone }),
+          body: JSON.stringify({ email, firstName, lastName, phone, department }),
         }
       );
 
