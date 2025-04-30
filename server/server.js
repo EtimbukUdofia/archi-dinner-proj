@@ -39,7 +39,7 @@ app.use(rateLimit({
   windowMs: 15 * 60 * 1000, max: 100
 }));
 
-app.use("/api/vo/home", (req, res) => {
+app.use("/api/v0/home", (req, res) => {
   res.send("Working");
 })
 app.use("/api/v0/payment", paymentRoutes);

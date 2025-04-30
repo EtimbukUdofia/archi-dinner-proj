@@ -14,7 +14,9 @@ const loadQRCode = async () => {
     }
 
     try {
-        const response = await fetch(`http://localhost:5000/api/v0/get-qr?reference=${reference}`);
+        const response = await fetch(
+          `https://archi-dinner-proj.onrender.com/api/v0/get-qr?reference=${reference}`
+        );
         const data = await response.json();
 
         if (response.ok) {
