@@ -46,7 +46,7 @@ export const initializePayment = async (req, res) => {
       },
       {
         headers: {
-          Authorization: `Bearer ${process.env.PAYSTACK_SECRET_TEST}`,
+          Authorization: `Bearer ${process.env.PAYSTACK_SECRET}`,
           "Content-Type": "application/json",
         },
       }
@@ -67,17 +67,15 @@ export const verifyPaymentAndGenerateQR = async (req, res) => {
   const { reference } = req.query;
 
   if (!reference) {
-    return res.redirect(`${process.env.FRONTEND_URL}/payment-failed?message=Missing%20Reference`);
+    return res.status(400).json({ success: false, message: "Reference is not provided" });
   }
-
-  // console.log("passed");
 
   try {
     const response = await axios.get(
       `https://api.paystack.co/transaction/verify/${reference}`,
       {
         headers: {
-          Authorization: `Bearer ${process.env.PAYSTACK_SECRET_TEST}`,
+          Authorization: `Bearer ${process.env.PAYSTACK_SECRET}`,
         },
       }
     );
@@ -109,12 +107,10 @@ export const verifyPaymentAndGenerateQR = async (req, res) => {
         email,
         qrCodeDataUrl,
       });
-      console.log("saved");
 
       // Send QR via Email
       await sendQRCodeEmail(reference, firstName, lastName, email, amount, qrCodeDataUrl, qrCodeBuffer);
 
-      // console.log({ qrcode: qrCodeDataUrl });
       res.redirect(successPage);
     } else {
       res.status(400).json({ success: false, message: "Payment not successful" });
