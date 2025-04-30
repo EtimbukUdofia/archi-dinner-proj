@@ -20,8 +20,8 @@ const PORT = process.env.PORT || 5000;
 const __dirname = path.resolve();
 
 app.use(helmet());
-// app.use(cors({origin: process.env.FRONTEND_URL, credentials: true}));
-app.use(cors());
+app.use(cors({origin: process.env.FRONTEND_URL, credentials: true}));
+// app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
 app.use(morgan('common', {
