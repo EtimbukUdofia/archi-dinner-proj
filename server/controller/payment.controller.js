@@ -6,7 +6,11 @@ import { QrCode } from "../model/QrCode.js";
 export const initializePayment = async (req, res) => {
   const { email, firstName, lastName, phone, department } = req.body;
 
-  const amount = 450000
+  if (!email || !firstName || !lastName || !phone || !department) {
+    return res.status(400).json({ success: false, message: "The Email, Firstname, Lastname, Phone Number and department are needed" });
+  }
+
+  const amount = process.env.PAYSTACK_AMOUNT;
 
   try {
     const response = await axios.post(
@@ -42,7 +46,7 @@ export const initializePayment = async (req, res) => {
       },
       {
         headers: {
-          Authorization: `Bearer ${process.env.PAYSTACK_SECRET}`,
+          Authorization: `Bearer ${process.env.PAYSTACK_SECRET_TEST}`,
           "Content-Type": "application/json",
         },
       }
@@ -73,7 +77,7 @@ export const verifyPaymentAndGenerateQR = async (req, res) => {
       `https://api.paystack.co/transaction/verify/${reference}`,
       {
         headers: {
-          Authorization: `Bearer ${process.env.PAYSTACK_SECRET}`,
+          Authorization: `Bearer ${process.env.PAYSTACK_SECRET_TEST}`,
         },
       }
     );
