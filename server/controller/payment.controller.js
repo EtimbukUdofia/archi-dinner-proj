@@ -46,7 +46,7 @@ export const initializePayment = async (req, res) => {
       },
       {
         headers: {
-          Authorization: `Bearer ${process.env.PAYSTACK_SECRET}`,
+          Authorization: `Bearer ${process.env.NODE_ENV === "development" ? process.env.PAYSTACK_SECRET_TEST : process.env.PAYSTACK_SECRET}`,
           "Content-Type": "application/json",
         },
       }
@@ -75,7 +75,11 @@ export const verifyPaymentAndGenerateQR = async (req, res) => {
       `https://api.paystack.co/transaction/verify/${reference}`,
       {
         headers: {
-          Authorization: `Bearer ${process.env.PAYSTACK_SECRET}`,
+          Authorization: `Bearer ${
+            process.env.NODE_ENV === "development"
+              ? process.env.PAYSTACK_SECRET_TEST
+              : process.env.PAYSTACK_SECRET
+          }`,
         },
       }
     );
@@ -90,7 +94,7 @@ export const verifyPaymentAndGenerateQR = async (req, res) => {
       const phone = metaData.find(field => field.variable_name === "phone")?.value || '';
       const department = metaData.find(field => field.variable_name === "department")?.value || '';
       
-      const successPage = `${process.env.FRONTEND_URL}result.html?reference=${reference}`;
+      const successPage = `${process.env.FRONTEND_URL}/result.html?reference=${reference}`;
       // const uniqueCode = `QR-${reference}`;
 
       //Generate QR Code
