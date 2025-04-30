@@ -1,0 +1,15 @@
+{
+  "name": "dinner-party-site",
+  "version": "1.0.0",
+  "description": "Architecture Department Dinner Party Ticketing Site",
+  "scripts": {
+    "dev": "parcel ./landingPage.html ./result.html",
+    "build": "parcel build ./landingPage.html ./result.html"
+  },
+  "devDependencies": {
+    "parcel": "^2.10.0"
+  },
+  "browserslist": [
+    "defaults"
+  ]
+}
