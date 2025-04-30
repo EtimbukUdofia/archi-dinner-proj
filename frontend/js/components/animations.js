@@ -78,11 +78,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
     try {
       const response = await fetch(
-        "http://localhost:5000/api/v0/payment/initialize-payment",
+        "https://archi-dinner-proj.onrender.com/api/v0/payment/initialize-payment",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email, firstName, lastName, phone, department }),
+          body: JSON.stringify({
+            email,
+            firstName,
+            lastName,
+            phone,
+            department,
+          }),
         }
       );
 
