@@ -4,7 +4,7 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import morgan from "morgan";
 import helmet from "helmet";
-import rateLimit from "express-rate-limit";
+// import rateLimit from "express-rate-limit";
 import compression from "compression";
 import fs from "fs";
 import path from "path";
@@ -20,6 +20,7 @@ const PORT = process.env.PORT || 5000;
 const __dirname = path.resolve();
 
 app.use(helmet());
+// app.set("trust proxy", true);
 app.use(cors({origin: process.env.FRONTEND_URL, credentials: true}));
 // app.use(cors());
 app.use(express.json());
@@ -35,11 +36,11 @@ if (process.env.NODE_ENV === "development") {
 }
 
 app.use(compression());
-app.use(rateLimit({
-  windowMs: 15 * 60 * 1000, max: 100
-}));
+// app.use(rateLimit({
+//   windowMs: 15 * 60 * 1000, max: 100
+// }));
 
-app.use("/api/v0/home", (req, res) => {
+app.use("/api/v0/homeadmin", (req, res) => {
   res.send("Working");
 })
 app.use("/api/v0/payment", paymentRoutes);
