@@ -20,7 +20,7 @@ export const sendQRCodeEmail = async (
   qrCodeBuffer
 ) => {
   const mailOptions = {
-    from: process.env.EMAIL_USER,
+    from: `"Dinner Party Tickets" <${process.env.EMAIL_USER}>`,
     to: email,
     subject: "Your QR Code is Ready!",
     attachDataUrls: true,
