@@ -28,9 +28,12 @@ app.use(morgan('common', {
   skip: function (req, res) { return res.statusCode < 400 }
 }));
 // remember to handle exceptions here
-app.use(morgan('common', {
-  stream: fs.createWriteStream(path.join(__dirname, 'log', 'access.log'), { flags: 'a' })
-}));
+if (process.env.NODE_ENV === "development") {
+  app.use(morgan('common', {
+    stream: fs.createWriteStream(path.join(__dirname, 'log', 'access.log'), { flags: 'a' })
+  }));
+}
+
 app.use(compression());
 app.use(rateLimit({
   windowMs: 15 * 60 * 1000, max: 100
