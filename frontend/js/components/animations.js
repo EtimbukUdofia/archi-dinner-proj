@@ -70,11 +70,11 @@ document.addEventListener('DOMContentLoaded', function() {
     form.style.pointerEvents = "none";
     form.style.opacity = "0.5";
     
-    const email = document.getElementById("email").value;
-    const firstName = document.getElementById("firstName").value;
-    const lastName = document.getElementById("lastName").value;
-    const phone = document.getElementById("phone").value;
-    const department = document.getElementById("department").value;
+    const email = document.getElementById("email").value.trim();
+    const firstName = document.getElementById("firstName").value.trim();
+    const lastName = document.getElementById("lastName").value.trim();
+    const phone = document.getElementById("phone").value.trim();
+    const department = document.getElementById("department").value.trim();
 
     try {
       const response = await fetch(
